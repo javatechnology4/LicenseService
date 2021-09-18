@@ -10,6 +10,7 @@ import com.licensing.service.config.ServiceConfig;
 import com.licensing.service.model.License;
 import com.licensing.service.model.Organization;
 import com.licensing.service.repository.LicenseRepository;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @Service
 public class LicenseService {
@@ -33,7 +34,7 @@ public class LicenseService {
         License license = licenseRepository.findByOrganizationIdAndLicenseId(organizationId, licenseId);
         return license.withComment(config.getExampleProperty());
     }
-
+    @HystrixCommand
     public List<License> getLicensesByOrg(String organizationId){
         return licenseRepository.findByOrganizationId( organizationId );
     }
